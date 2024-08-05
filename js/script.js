@@ -169,3 +169,5 @@ document.addEventListener('DOMContentLoaded', function() {
     workData.forEach(work => addWorkToTable(work));
     updateSummary();
 });
+
+
