@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         workForm.reset();
     });
 
-    function addWorkToTable(work) {
+    window.addWorkToTable = function(work) {
         const row = document.createElement('tr');
         row.classList.add(work.status);
         row.innerHTML = `
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         workTableBody.appendChild(row);
     }
 
-    function updateStatus(workNumber, status) {
+    window.updateStatus = function(workNumber, status) {
         const work = workData.find(work => work.workNumber === workNumber);
         work.status = status;
         if (status === 'paid') {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSummary();
     }
 
-    function updateWorkInTable(work) {
+    window.updateWorkInTable = function(work) {
         const rows = workTableBody.getElementsByTagName('tr');
         for (let row of rows) {
             if (parseInt(row.cells[0].textContent) === work.workNumber) {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function updateSummary() {
+    window.updateSummary = function() {
         const totalExtraHours = workData.reduce((sum, work) => sum + work.extraHours, 0);
         const totalPrice = workData.reduce((sum, work) => sum + work.totalPrice, 0);
         const paidAmount = workData.filter(work => work.status === 'paid').reduce((sum, work) => sum + work.totalPrice, 0);
@@ -99,11 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    function openInMaps(address) {
+    window.openInMaps = function(address) {
         window.open(`https://maps.apple.com/?daddr=${encodeURIComponent(address)}`, '_blank');
     }
 
-    function editWork(workNumber) {
+    window.editWork = function(workNumber) {
         const work = workData.find(work => work.workNumber === workNumber);
         document.getElementById('work-address').value = work.address;
         document.getElementById('work-price').value = work.price;
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteWork(workNumber);
     }
 
-    function deleteWork(workNumber) {
+    window.deleteWork = function(workNumber) {
         const index = workData.findIndex(work => work.workNumber === workNumber);
         if (index !== -1) {
             workData.splice(index, 1);
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function formatDate(date) {
+    window.formatDate = function(date) {
         const d = new Date(date);
         let month = '' + (d.getMonth() + 1);
         let day = '' + d.getDate();
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return [year, month, day].join('-');
     }
 
-    function initMap() {
+    window.initMap = function() {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
             center: { lat: 39.9526, lng: -75.1652 } // Centered on Philadelphia
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
         geocoder = new google.maps.Geocoder();
     }
 
-    function addMarkerToMap(address) {
+    window.addMarkerToMap = function(address) {
         if (markers[address]) return; // Marker already exists
 
         geocoder.geocode({ address: address }, function(results, status) {
