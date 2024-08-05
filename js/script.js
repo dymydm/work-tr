@@ -106,7 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (index !== -1) {
             workData.splice(index, 1);
             localStorage.setItem('workData', JSON.stringify(workData));
-            workTableBody.deleteRow(index);
+            const rows = workTableBody.getElementsByTagName('tr');
+            rows[index].remove();
             updateSummary();
         }
     }
