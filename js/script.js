@@ -111,26 +111,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    window.formatDate = function(date) {
-        const d = new Date(date);
-        let month = '' + (d.getMonth() + 1);
-        let day = '' + d.getDate();
-        const year = d.getFullYear();
-
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-
-        return [year, month, day].join('-');
-    }
-
-    function updateClock() {
-        const clock = document.getElementById('clock');
-        const now = new Date();
-        clock.innerHTML = now.toLocaleTimeString();
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock();
-    workData.forEach(work => addWorkToTable(work));
-    updateSummary();
-});
+    window.formatDate =
