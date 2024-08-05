@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>${work.totalPrice.toFixed(2)}</td>
             <td>
                 <button class="status-btn unpaid" onclick="updateStatus(${work.workNumber}, 'unpaid')">Unpaid</button>
-                <button class="status-btn processing" onclick="updateStatus(${work.workNumber}, 'processing')">Processing</button>
                 <button class="status-btn paid" onclick="updateStatus(${work.workNumber}, 'paid')">Paid</button>
             </td>
             <td>${work.paymentDate ? work.paymentDate : 'N/A'}</td>
@@ -82,14 +81,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.updateSummary = function() {
         const totalExtraHours = workData.reduce((sum, work) => sum + work.extraHours, 0);
-        const totalPrice = workData.reduce((sum, work) => sum + work.totalPrice, 0);
+        const totalPrice = workData.reduce((sum, work) => sum + work.price, 0);
+        const totalAmount = workData.reduce((sum, work) => sum + work.totalPrice, 0);
         const paidAmount = workData.filter(work => work.status === 'paid').reduce((sum, work) => sum + work.totalPrice, 0);
-        const unpaidAmount = totalPrice - paidAmount;
+        const unpaidAmount = totalAmount - paidAmount;
 
         summaryTableBody.innerHTML = `
             <tr>
                 <td>${totalExtraHours}</td>
                 <td>${totalPrice.toFixed(2)}</td>
+                <td>${totalAmount.toFixed(2)}</td>
                 <td>${paidAmount.toFixed(2)}</td>
                 <td>${unpaidAmount.toFixed(2)}</td>
             </tr>
